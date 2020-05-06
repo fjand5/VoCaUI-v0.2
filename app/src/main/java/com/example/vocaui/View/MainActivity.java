@@ -36,12 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     MqttConnectManager.Callback callback;
     Menu mMenu;
-//    public AppCompatActivity mActivity;
-//    static boolean countinueFlag=false;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
         mMenu =menu;
         mMenu.add("Cài Đặt");
         return true;
@@ -108,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onMessageArrived(String topic, MqttMessage message) {
 
                 String content = new String(message.getPayload());
+
                 if(topic.equals(MqttSetting.getInstance().getInfo(context).get("topic").toString() + "/dashboard"))
                     renderView(content);
             }
@@ -124,46 +122,47 @@ public class MainActivity extends AppCompatActivity {
             mainLayout.removeAllViews();
 
         Document doc = Jsoup.parse(htmlDoc, "UTF-8");
-        Elements menuList = doc.getElementsByTag("div");
-        for (Element menu : menuList){
-            if(     menu.id().equals("menu")
-                    || menu.id().equals("mask")
-                    || menu.id().equals("menu-button")
-                    || menu.id().equals("setting")
-                    || menu.id().equals("wifi")
-            )
-                continue;
-            Elements childElementMenu = menu.children();
-            GridLayout container = RenderElement.getInstance().render_container(this,menu.id());
-
-
-            for (final Element child:
-            childElementMenu) {
-                if(child.attributes().get("class").equals("timePicker")){
-                    RenderElement.getInstance().render_timepicker(child,container);
-                }
-                else if(child.tagName().equals("button")){
-                   RenderElement.getInstance().render_button(child,container);
-                }
-                else if(child.tagName().equals("input")
-                && child.hasAttr("readonly")){
-                                RenderElement.getInstance().render_textView(child,container);
-                }
-                else if(child.tagName().equals("input")
-                        && child.attributes().get("type").equals("range")){
-                    RenderElement.getInstance().render_range(child,container);
-                }
-                else if(child.tagName().equals("br")){
-                    RenderElement.getInstance().render_newLine(container);
-                }else if(child.tagName().equals("label")){
-                    RenderElement.getInstance().render_label(child,container);
-                }
-
-
-            }
-
-
-        }
+        String title =doc.getElementsByTag("title").first().html();
+        setTitle(title);
+//        for (Element menu : menuList){
+//            if(     menu.id().equals("menu")
+//                    || menu.id().equals("mask")
+//                    || menu.id().equals("menu-button")
+//                    || menu.id().equals("setting")
+//                    || menu.id().equals("wifi")
+//            )
+//                continue;
+//            Elements childElementMenu = menu.children();
+//            GridLayout container = RenderElement.getInstance().render_container(this,menu.id());
+//
+//
+//            for (final Element child:
+//            childElementMenu) {
+//                if(child.attributes().get("class").equals("timePicker")){
+//                    RenderElement.getInstance().render_timepicker(child,container);
+//                }
+//                else if(child.tagName().equals("button")){
+//                   RenderElement.getInstance().render_button(child,container);
+//                }
+//                else if(child.tagName().equals("input")
+//                && child.hasAttr("readonly")){
+//                                RenderElement.getInstance().render_textView(child,container);
+//                }
+//                else if(child.tagName().equals("input")
+//                        && child.attributes().get("type").equals("range")){
+//                    RenderElement.getInstance().render_range(child,container);
+//                }
+//                else if(child.tagName().equals("br")){
+//                    RenderElement.getInstance().render_newLine(container);
+//                }else if(child.tagName().equals("label")){
+//                    RenderElement.getInstance().render_label(child,container);
+//                }
+//
+//
+//            }
+//
+//
+//        }
 
 
 

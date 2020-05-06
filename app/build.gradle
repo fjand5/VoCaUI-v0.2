@@ -37,4 +37,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
     compile 'com.desarrollodroide:fragmenttransactionextended:1'
+    implementation 'com.beardedhen:androidbootstrap:2.3.2'
 }
