@@ -5,19 +5,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.vocaui.Presenter.MqttConnectManager;
+import com.example.vocaui.Presenter.MqttSetting;
 import com.example.vocaui.R;
 import com.example.vocaui.View.Utils.RenderElement;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MenuPage_Frag extends Fragment  {
     private View rootView;
     private ViewGroup mContainer;
     String name;
-
+    String htmlId;
+    GridLayout container;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +40,7 @@ public class MenuPage_Frag extends Fragment  {
 
         super.onResume();
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -57,6 +65,19 @@ public class MenuPage_Frag extends Fragment  {
         this.name = name;
     }
 
+    public GridLayout getContainer() {
+        return container;
+    }
 
+    public void setContainer(GridLayout container) {
+        this.container = container;
+    }
 
+    public String getHtmlId() {
+        return htmlId;
+    }
+
+    public void setHtmlId(String htmlId) {
+        this.htmlId = htmlId;
+    }
 }

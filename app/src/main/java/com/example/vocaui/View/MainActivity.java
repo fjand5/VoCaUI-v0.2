@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 RenderElement.getInstance().getMenuPage_frags()) {
             if(elm.getName().equals(item.getTitle())){
                 RenderElement.getInstance().showMenuByName(this,elm.getName());
+
                 getSupportActionBar().setTitle(elm.getName());
             }
 
@@ -107,12 +108,59 @@ public class MainActivity extends AppCompatActivity {
         Document doc = Jsoup.parse(htmlDoc, "UTF-8");
         String title =doc.getElementsByTag("title").first().html();
         setTitle(title);
+
+        // Tạo các fragment dựa trên danh sách menu
         Elements elements = doc.getElementsByClass("lmnu").select("ul");
+        mMenu.clear();
+        mMenu.add("Cài Đặt");
         for (Element e: elements.select("li")
              ) {
-            String mnu = e.select("a").html();
-            RenderElement.getInstance().render_container(this,mnu);
+            String mnuName = e.select("a").html();
+            String tmp =e.attr("onclick");
+            String id = tmp
+                    .substring(tmp.indexOf('(')+1,tmp.indexOf(')'))
+                    .split(",")[0]
+                    .replace("\'","");
+            if(id.equals("wifi")
+                    ||id.equals("setting"))
+                continue;
+            RenderElement.getInstance().render_container(this,mnuName,id);
+            mMenu.add(mnuName);
+
         }
+        // Đưa các phần tử vào fragment tương ứng
+        for (Element elm:
+             doc.select("*")) {
+            String className = elm.attr("class");
+            if(!elm.hasAttr("class"))
+                continue;
+
+            String htmlid = elm.parent().id();
+            if(htmlid.equals("wifi")
+                    ||htmlid.equals("setting"))
+                continue;
+            if(className.equals("rng")){
+
+                RenderElement.getInstance().render_range(elm,RenderElement.getFragByHtmlId(htmlid).getContainer());
+            }
+            else if(className.equals("txtvie")){
+                RenderElement.getInstance().render_textView(elm,RenderElement.getFragByHtmlId(htmlid).getContainer());
+
+            }else if(className.equals("inptxt")){
+                RenderElement.getInstance().render_inputText(elm,RenderElement.getFragByHtmlId(htmlid).getContainer());
+
+            }else if(className.equals("sglbtn")){
+                RenderElement.getInstance().render_button(elm,RenderElement.getFragByHtmlId(htmlid).getContainer());
+
+            }else if(className.equals("tmpk")){
+                RenderElement.getInstance().render_timepicker(elm,RenderElement.getFragByHtmlId(htmlid).getContainer());
+
+            }
+
+
+        }
+
+
 //        for (Element menu : menuList){
 //            if(     menu.id().equals("menu")
 //                    || menu.id().equals("mask")
@@ -155,12 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        mMenu.clear();
-        mMenu.add("Cài Đặt");
-        for (MenuPage_Frag elm:
-                RenderElement.getInstance().getMenuPage_frags()) {
-            mMenu.add(elm.getName());
-        }
+
         RenderElement.getInstance().render_finish(this);
     }
 
