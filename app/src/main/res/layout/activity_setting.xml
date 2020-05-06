@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:isScrollContainer="true"
+>
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/checkTxt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Vui lòng nhập đủ thông tin"
+            android:gravity="center"
+            android:layout_weight=".5"
+        />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingRight="@dimen/heightSize"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Địa Chỉ: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/padSize" />
+            <EditText
+                android:id="@+id/addrTxt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightSize"
+                android:layout_gravity="center"
+                android:inputType="textUri"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingRight="@dimen/heightSize"
+            android:paddingLeft="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Cổng: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/padSize" />
+            <EditText
+                android:id="@+id/portTxt"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/heightSize"
+                android:layout_gravity="center"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingRight="@dimen/heightSize"
+            android:paddingLeft="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/heightSize"
+                android:text="Tên: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/padSize" />
+            <EditText
+                android:id="@+id/nameTxt"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/heightSize"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingRight="@dimen/heightSize"
+            android:paddingLeft="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/heightSize"
+                android:text="Mật khẩu: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/padSize" />
+            <EditText
+                android:id="@+id/passTxt"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/heightSize"
+                android:layout_gravity="center"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingRight="@dimen/heightSize"
+            android:paddingLeft="10dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/heightSize"
+                android:text="Topic: "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/padSize" />
+            <EditText
+                android:id="@+id/topicTxt"
+                android:layout_width="250dp"
+                android:layout_height="@dimen/heightSize"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padSizeLarg"
+            >
+            <Button
+                android:id="@+id/saveBtn"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:drawablePadding="@dimen/padSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Lưu"
+                android:padding="@dimen/padSize"
+                android:layout_weight=".5"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:enabled="false"/>
+            <View
+                android:layout_width="@dimen/padSizeLarg"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/exitBtn"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:drawablePadding="@dimen/padSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Thoát"
+                android:padding="@dimen/padSize"
+                android:layout_weight=".5"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
