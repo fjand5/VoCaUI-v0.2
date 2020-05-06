@@ -17,6 +17,7 @@ public class MenuPage_Frag extends Fragment  {
     private View rootView;
     private ViewGroup mContainer;
     String name;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,4 +56,7 @@ public class MenuPage_Frag extends Fragment  {
     public void setName(String name) {
         this.name = name;
     }
+
+
+
 }

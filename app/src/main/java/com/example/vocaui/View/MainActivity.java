@@ -62,23 +62,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-//    @Override
-//    protected void onResume() {
-////        super.onResume();
-//
-////        mActivity = this;
-////        if(!countinueFlag
-////        && MainService.isMyServiceRunning(this,MainService.class))
-////            MainService.getInstance().stopMe();
-//
-////        countinueFlag = false;
-//
-//    }
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -124,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         Document doc = Jsoup.parse(htmlDoc, "UTF-8");
         String title =doc.getElementsByTag("title").first().html();
         setTitle(title);
+        Elements elements = doc.getElementsByClass("lmnu").select("ul");
+        for (Element e: elements.select("li")
+             ) {
+            String mnu = e.select("a").html();
+            RenderElement.getInstance().render_container(this,mnu);
+        }
 //        for (Element menu : menuList){
 //            if(     menu.id().equals("menu")
 //                    || menu.id().equals("mask")
