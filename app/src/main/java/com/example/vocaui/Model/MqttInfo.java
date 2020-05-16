@@ -58,7 +58,6 @@ public class MqttInfo{
     public void setInfo(Context context, String addr, int port, String name, String pass, String topic) {
 
             SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-
             editor.putString("address",addr).commit();
             editor.putInt("port",port).commit();
             editor.putString("username",name).commit();

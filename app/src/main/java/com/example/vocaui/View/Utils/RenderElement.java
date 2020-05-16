@@ -455,10 +455,10 @@ public class RenderElement {
     }
 
     public void render_finish(AppCompatActivity activity){
-        Log.d("htl","render_finish:" + activity);
+        Log.d("htl","render_finish:" + activity.isDestroyed());
         boolean fisrtTimeFlag = true;
-//        if(activity.isDestroyed())
-//            return;
+        if(activity.isDestroyed())
+            return;
         for (MenuPage_Frag elm:menuPage_frags
              ) {
 

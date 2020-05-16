@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        mMenu =menu;
+        mMenu = menu;
         mMenu.add("Cài Đặt");
         return true;
     }
@@ -64,12 +64,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("htl","onResume:");
+        RenderElement.getInstance().requestUI(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Log.d("htl","onCreate:" + this);
         setContentView(R.layout.activity_main);
-        RenderElement.getInstance().requestUI(this);
         addEvent(this);
         MainService.beginService(this);
 
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void renderView(String htmlDoc){
-
+        Log.d("htl", "htmlDoc: " + htmlDoc);
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
         RenderElement.getInstance().clearAll();
         if(mainLayout.getChildCount() > 0)
@@ -113,9 +118,12 @@ public class MainActivity extends AppCompatActivity {
         Elements elements = doc.getElementsByClass("lmnu").select("ul");
         mMenu.clear();
         mMenu.add("Cài Đặt");
+        Log.d("htl", "befor: " + this.toString());
         for (Element e: elements.select("li")
              ) {
+
             String mnuName = e.select("a").html();
+
             String tmp =e.attr("onclick");
             String id = tmp
                     .substring(tmp.indexOf('(')+1,tmp.indexOf(')'))
@@ -124,8 +132,10 @@ public class MainActivity extends AppCompatActivity {
             if(id.equals("wifi")
                     ||id.equals("setting"))
                 continue;
+
             RenderElement.getInstance().render_container(this,mnuName,id);
             mMenu.add(mnuName);
+            Log.d("htl", "mMenuadd: " + mnuName.toString());
 
         }
         // Đưa các phần tử vào fragment tương ứng
@@ -159,50 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-
-
-//        for (Element menu : menuList){
-//            if(     menu.id().equals("menu")
-//                    || menu.id().equals("mask")
-//                    || menu.id().equals("menu-button")
-//                    || menu.id().equals("setting")
-//                    || menu.id().equals("wifi")
-//            )
-//                continue;
-//            Elements childElementMenu = menu.children();
-//            GridLayout container = RenderElement.getInstance().render_container(this,menu.id());
-//
-//
-//            for (final Element child:
-//            childElementMenu) {
-//                if(child.attributes().get("class").equals("timePicker")){
-//                    RenderElement.getInstance().render_timepicker(child,container);
-//                }
-//                else if(child.tagName().equals("button")){
-//                   RenderElement.getInstance().render_button(child,container);
-//                }
-//                else if(child.tagName().equals("input")
-//                && child.hasAttr("readonly")){
-//                                RenderElement.getInstance().render_textView(child,container);
-//                }
-//                else if(child.tagName().equals("input")
-//                        && child.attributes().get("type").equals("range")){
-//                    RenderElement.getInstance().render_range(child,container);
-//                }
-//                else if(child.tagName().equals("br")){
-//                    RenderElement.getInstance().render_newLine(container);
-//                }else if(child.tagName().equals("label")){
-//                    RenderElement.getInstance().render_label(child,container);
-//                }
-//
-//
-//            }
-//
-//
-//        }
-
-
-
 
         RenderElement.getInstance().render_finish(this);
     }
