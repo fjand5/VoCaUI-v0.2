@@ -36,6 +36,7 @@ public class MainService extends Service {
     NotificationCompat.Builder ntf;
     NotificationManager nm;
     static RemoteViews rv;
+    static RemoteViews rvb;
     int MAIN_ID = 1;
     String name;
 
@@ -127,16 +128,14 @@ public class MainService extends Service {
 
         ntf = new NotificationCompat.Builder(this,MainService.class.getName());
 
-
         ntf.setSmallIcon(R.drawable.ic_launcher_background);
 
         rv= new RemoteViews(getPackageName(),R.layout.notify_layout);
 
         Intent openGuiButton = new Intent(OpenGUI.getActionName());
         openGuiButton.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Log.d("htl","Received Cancelled Event11: " +this );
         rv.setOnClickPendingIntent(R.id.openGUIBtn, PendingIntent.getBroadcast(this, 0, openGuiButton, 0));
-
+        ntf.setCustomContentView(rv);
 
         ntf.setContent(rv);
 

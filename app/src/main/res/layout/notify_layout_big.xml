@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="@dimen/padSize"
+
+    >
+    <Button
+        android:id="@+id/openGUIBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mở ứng dụng to"
+        android:textSize="25dp"
+        android:textAllCaps="true"
+        android:padding="3dp"
+       />
+
+
+
+</LinearLayout>
