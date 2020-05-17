@@ -46,6 +46,7 @@ import java.util.List;
 
 
 public class RenderElement {
+    private boolean gotGUI = false;
     private static List<MenuPage_Frag> menuPage_frags;
     private static final RenderElement ourInstance = new RenderElement();
     int curCol =0;
@@ -66,13 +67,14 @@ public class RenderElement {
         return menuPage_frags;
     }
 
-    public void clearAll(){
+    public void beginRender(){
         curCol =0;
         if(menuPage_frags==null)
             menuPage_frags = new ArrayList<>();
-        else
-            menuPage_frags.clear();
+        menuPage_frags.clear();
         MqttConnectManager.getInstance().clearOnEventMqtt();
+
+
     }
     private RenderElement() {
         menuPage_frags = new ArrayList<>();
@@ -455,28 +457,33 @@ public class RenderElement {
     }
 
     public void render_finish(AppCompatActivity activity){
-        Log.d("htl","render_finish:" + activity.isDestroyed());
         boolean fisrtTimeFlag = true;
         if(activity.isDestroyed())
             return;
+        FragmentManager fm = activity.getSupportFragmentManager();
+        for (Fragment frm: fm.getFragments()
+             ) {
+            fm.beginTransaction().remove(frm).commit();
+        }
         for (MenuPage_Frag elm:menuPage_frags
              ) {
 
-            activity.getSupportFragmentManager().beginTransaction()
+            fm.beginTransaction()
                     .add(R.id.mainLayout,elm,elm.getName()).commit();
             if(fisrtTimeFlag){
-                activity.getSupportFragmentManager().beginTransaction()
+                fm.beginTransaction()
                 .show(elm).commit();
                 activity.getSupportActionBar().setTitle(elm.getName());
             }
             else
-                activity.getSupportFragmentManager().beginTransaction()
+                fm.beginTransaction()
                         .hide(elm).commit();
             fisrtTimeFlag=false;
         }
 
         requestState(activity);
-
+        Log.d("htl","render_finish222:" + "render_finish");
+        gotGUI=true;
 
     }
 
@@ -503,14 +510,29 @@ public class RenderElement {
                         .hide(elm).commit();
         }
     }
-    public void requestUI(Context context){
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id","ui");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        MqttConnectManager.sendData(MqttSetting.getInstance().getInfo(context).get("topic").toString()+"/rx",jsonObject.toString());
+    public void requestUI(final Context context){
+        gotGUI=false;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!gotGUI){
+                    Log.d("htl","gotGUI:" + "sssss");
+
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("id","ui");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    MqttConnectManager.sendData(MqttSetting.getInstance().getInfo(context).get("topic").toString()+"/rx",jsonObject.toString());
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
     }
     public void requestState(Context context){

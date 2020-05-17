@@ -1,20 +1,14 @@
 package com.example.vocaui.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 
@@ -66,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("htl","onResume:");
+        Log.d("htl","onResume:" + "onResume");
         RenderElement.getInstance().requestUI(this);
     }
 
@@ -104,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void renderView(String htmlDoc){
-        Log.d("htl", "htmlDoc: " + htmlDoc);
+
         LinearLayout mainLayout = findViewById(R.id.mainLayout);
-        RenderElement.getInstance().clearAll();
+        RenderElement.getInstance().beginRender();
         if(mainLayout.getChildCount() > 0)
             mainLayout.removeAllViews();
 
@@ -118,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Elements elements = doc.getElementsByClass("lmnu").select("ul");
         mMenu.clear();
         mMenu.add("Cài Đặt");
-        Log.d("htl", "befor: " + this.toString());
+
         for (Element e: elements.select("li")
              ) {
 
@@ -135,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
             RenderElement.getInstance().render_container(this,mnuName,id);
             mMenu.add(mnuName);
-            Log.d("htl", "mMenuadd: " + mnuName.toString());
 
         }
         // Đưa các phần tử vào fragment tương ứng

@@ -28,7 +28,11 @@
         <activity android:name=".View.SettingActivity"/>
         <service android:name=".BackgroudProccess.MainService"/>
         <service android:name="org.eclipse.paho.android.service.MqttService"></service>
-
+<!--<receiver android:name=".BackgroudProccess.OpenGUI">-->
+<!--    <intent-filter>-->
+<!--        <action android:name="Download_Cancelled" />-->
+<!--    </intent-filter>-->
+<!--</receiver>-->
     </application>
 
 </manifest>

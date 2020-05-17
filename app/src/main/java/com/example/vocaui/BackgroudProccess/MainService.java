@@ -6,12 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.vocaui.R;
+import com.example.vocaui.View.MainActivity;
+import com.example.vocaui.View.SettingActivity;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -27,6 +31,7 @@ import static android.widget.Toast.LENGTH_LONG;
 public class MainService extends Service {
 
     static MainService instance;
+    OpenGUI openGUI;
     MqttBroadcast mqttBroadcast;
     NotificationCompat.Builder ntf;
     NotificationManager nm;
@@ -53,10 +58,10 @@ public class MainService extends Service {
     public void onCreate() {
         name = getPackageName();
         super.onCreate();
-
         mqttBroadcast = new MqttBroadcast();
+        openGUI=new OpenGUI();
         registerReceiver(new MqttBroadcast(),new IntentFilter(MqttBroadcast.getActionName()));
-
+        registerReceiver(new OpenGUI(),new IntentFilter(OpenGUI.getActionName()));
 
     }
 
@@ -126,11 +131,38 @@ public class MainService extends Service {
         ntf.setSmallIcon(R.drawable.ic_launcher_background);
 
         rv= new RemoteViews(getPackageName(),R.layout.notify_layout);
-        ntf.setContent(rv);
 
+        Intent openGuiButton = new Intent(OpenGUI.getActionName());
+        openGuiButton.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.d("htl","Received Cancelled Event11: " +this );
+        rv.setOnClickPendingIntent(R.id.openGUIBtn, PendingIntent.getBroadcast(this, 0, openGuiButton, 0));
+
+
+        ntf.setContent(rv);
 
         startForeground(MAIN_ID, ntf.build());
 
     }
 
+}
+class  OpenGUI extends BroadcastReceiver {
+    static String _actionName="OpenGUI";
+
+    public static String getActionName() {
+        return _actionName;
+    }
+
+    public static void setActionName(String _actionName) {
+        OpenGUI._actionName = _actionName;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        context.sendBroadcast(closeIntent);
+        Intent i = new Intent(context, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+
+    }
 }
